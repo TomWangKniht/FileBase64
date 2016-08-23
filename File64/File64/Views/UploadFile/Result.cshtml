@@ -1,0 +1,18 @@
+﻿@model File64.Models.Base64ResultViewModel
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<h2>Result</h2>
+
+<div>
+
+    <textarea style="width:1200px;height:200px;max-width:1200px;">@Html.Raw(Model.base64Code)</textarea>
+
+
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

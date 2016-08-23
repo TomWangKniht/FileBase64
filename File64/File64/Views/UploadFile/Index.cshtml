@@ -1,0 +1,54 @@
+﻿@model File64.Models.UploadFileViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>上傳檔案</h2>
+
+
+@using (Html.BeginForm("GetBase64",
+                            "UploadFile", FormMethod.Post,
+                            new { enctype = "multipart/form-data", id = "dataForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.uploadFile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file"id="uploadFile" name="uploadFile" />
+                @Html.ValidationMessageFor(model => model.uploadFile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ToBase64" class="btn btn-default" />
+               @* <input type="button" id="btnToBase64" value="ToBase64" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            //alert("jquery");
+            //$("#btnToBase64").on("click", clickBtnToBase64);
+        });
+        @*function clickBtnToBase64() {
+           
+            //var formObj = $("#dataForm");
+            $("#dataForm").attr("action", '@Url.Content("~/UploadFile/GetBase64")');
+            $("#dataForm").submit();
+
+        }*@
+    </script>
+}
