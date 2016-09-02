@@ -24,14 +24,19 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="ToBase64" class="btn btn-default" />
-               @* <input type="button" id="btnToBase64" value="ToBase64" class="btn btn-default" />*@
-            </div>
+          @*  <div class="col-md-offset-2 col-md-10">*@
+                <input type="submit" value="ToBase64(submitForm)" class="btn btn-default" />
+                <input type="button" id="btnToBase64" value="ToBase64(ajax)" class="btn btn-default" />
+                <input type="button" id="btnReset" value="Reset" class="btn btn-default" />
+            @*</div>*@
         </div>
     </div>
 }
-
+<div id="divResult">
+    <hr />
+    <span>轉換結果</span>
+    <textarea style="width:1200px;height:200px;max-width:1200px;" id="textAreaResult"></textarea>
+</div>
 @*<div>
     @Html.ActionLink("Back to List", "Index")
 </div>*@
@@ -41,14 +46,46 @@
     <script>
         $(function () {
             //alert("jquery");
-            //$("#btnToBase64").on("click", clickBtnToBase64);
+            $("#divResult").hide();
+            $("#btnToBase64").on("click", clickBtnToBase64);
+            $("#btnReset").on("click", clickBtnReset);
         });
-        @*function clickBtnToBase64() {
+        function clickBtnToBase64() {
            
             //var formObj = $("#dataForm");
-            $("#dataForm").attr("action", '@Url.Content("~/UploadFile/GetBase64")');
-            $("#dataForm").submit();
+            @*$("#dataForm").attr("action", '@Url.Content("~/UploadFile/GetBase64")');
+            $("#dataForm").submit();*@
+            //alert("click clickBtnToBase64");
+            var formData = new FormData();
+            var file = document.getElementById("uploadFile").files[0];
+            formData.append("uploadFile", file);
+           
+            $.ajax({
+                type: "POST",
+                url: '/UploadFile/GetBase64Ajax',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#divResult").show();
+                    //alert('succes!!' + response.base64Code);
+                    $("#textAreaResult").text(response.base64Code);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //alert("errror:" + textStatus);
+                    alert("errror:" + jqXHR.responseText+";"+textStatus+";"+errorThrown);
+                    jqXHR.responseText
+                }
+            });
 
-        }*@
+
+        }
+
+        function clickBtnReset() {
+            $("#dataForm")[0].reset();
+            //$("#textAreaResult").text("");
+            $("#divResult").hide();
+        }
     </script>
 }

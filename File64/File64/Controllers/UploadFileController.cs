@@ -34,5 +34,18 @@ namespace File64.Controllers
             }
                 return View("Index",model);
         }
+        public ActionResult GetBase64Ajax(UploadFileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                byte[] byteData = new byte[model.uploadFile.ContentLength];
+                model.uploadFile.InputStream.Read(byteData, 0, byteData.Length);
+                var convertString = Convert.ToBase64String(byteData);
+                //return Content(convertString);
+                var result = new Base64ResultViewModel() { base64Code = convertString };
+                return Json(result);
+            }
+            return Json(new { msg="false"});
+        }
     }
 }
