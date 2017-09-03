@@ -25,10 +25,10 @@ namespace File64.Controllers
             return View();
         }
 
-        public ActionResult Create(UploadFileViewModel model)
-        {
-            return Content("尚未實作");
-        }
+        //public ActionResult Create(UploadFileViewModel model)
+        //{
+        //    return Content("尚未實作");
+        //}
         //參考
         //http://stackoverflow.com/questions/15680629/mvc-4-razor-file-upload
         public ActionResult GetBase64(UploadFileViewModel model)
